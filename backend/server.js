@@ -4,9 +4,9 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-
 import errorHandler from "./middlewares/errorHandler.js";
 import ConnectDB from "./config/db.js";
+import authRouter from "./Routes/authRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,14 +26,14 @@ app.use(errorHandler);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use((req, res) => {
-  res
-    .status(404)
-    .json({ success: false, error: "Route not found", status: 404 });
-});
-app.use("/api/auth", authRoutes);
+// app.use((req, res) => {
+//   res
+//     .status(404)
+//     .json({ success: false, error: "Route not found", status: 404 });
+// });
+app.use("/api/auth", authRouter);
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });
 process.on("unhandledRejection", (err) => {
   console.error(`Unhandled Rejection: ${err.message}`);

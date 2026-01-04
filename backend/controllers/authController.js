@@ -25,18 +25,43 @@ const register = async (req, res, next) => {
     res.status(201).json({
       success: true,
       data: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          profileImage: user.profileImage,
+          createdAt: user.createdAt,
+        },
         token,
       },
+      Message: "User registered successfully",
     });
   } catch (error) {
     next(error);
   }
 };
-const login = async (req, res, next) => {};
-const getProfile = async (req, res, next) => {};
-const updateProfile = async (req, res, next) => {};
-const changePassword = async (req, res, next) => {};
+const login = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+const getProfile = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+const updateProfile = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+const changePassword = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
 export { register, login, getProfile, updateProfile, changePassword };
