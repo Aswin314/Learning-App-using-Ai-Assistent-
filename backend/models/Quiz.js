@@ -59,5 +59,7 @@ const QuizSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+QuizSchema.index({ userId: 1, documentId: 1 }, { unique: true });
 const Quiz = mongoose.model("Quiz", QuizSchema);
 export default Quiz;
+
