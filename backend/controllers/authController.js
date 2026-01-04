@@ -42,6 +42,39 @@ const register = async (req, res, next) => {
 };
 const login = async (req, res, next) => {
   try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Email and password are required" });
+    }
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid email or password" });
+    }
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid email or password" });
+    }
+    const token = generateToken(user._id);
+    res.status(200).json({
+      success: true,
+      data: {
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          profileImage: user.profileImage,
+          createdAt: user.createdAt,
+        },
+        token,
+      },
+      Message: "User logged in successfully",
+    });
   } catch (error) {
     next(error);
   }
